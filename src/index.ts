@@ -78,7 +78,7 @@ let cache: string[] = [];
 puppeteer.use(StealthPlugin());
 puppeteer
   .launch({
-    headless:  false,
+    headless: false,
     args: ["--no-sandbox"],
   })
   .then(async (browser) => {
@@ -88,16 +88,16 @@ puppeteer
     console.log(`Login to slack now..`);
     // await wait(500);
     await page.waitForNavigation();
-try {
-    await page.evaluate(() => {
-      //@ts-ignore
-      document
-        .getElementsByClassName(
-          "bg-white text-black p-2 px-3 sm:px-6 w-fit rounded-lg text-base linkPop",
-        )[0]
-        .click();
-    });
-} catch (e) {}
+    try {
+      await page.evaluate(() => {
+        //@ts-ignore
+        document
+          .getElementsByClassName(
+            "bg-white text-black p-2 px-3 sm:px-6 w-fit rounded-lg text-base linkPop",
+          )[0]
+          .click();
+      });
+    } catch (e) {}
     await page.waitForNavigation();
     await wait(200);
     await page.type('[data-qa="signin_domain_input"]', "hackclub");
@@ -283,9 +283,9 @@ try {
     }
     getMatchups();
   });
-process.on('uncaughtException', function (err) {
+process.on("uncaughtException", function (err) {
   console.error(err);
   console.log("Node NOT Exiting...");
 });
 
-process.on('unhandledRejection', console.error)
+process.on("unhandledRejection", console.error);
