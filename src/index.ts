@@ -88,22 +88,18 @@ puppeteer
     console.log(`Login to slack now..`);
     // await wait(500);
     await page.waitForNavigation();
-try {
-    await page.evaluate(() => {
-     try {
-
-     
-      document
-        .getElementsByClassName(
-          "bg-white text-black p-2 px-3 sm:px-6 w-fit rounded-lg text-base linkPop",
-        )[0]
-      //@ts-ignore
-        ?.click();
-      } catch (e) {
-
-      }
+    try {
+      await page.evaluate(() => {
+        try {
+          document
+            .getElementsByClassName(
+              "bg-white text-black p-2 px-3 sm:px-6 w-fit rounded-lg text-base linkPop",
+            )[0]
+            //@ts-ignore
+            ?.click();
+        } catch (e) {}
       });
-} catch (e) {}
+    } catch (e) {}
     await page.waitForNavigation();
     await wait(200);
     await page.type('[data-qa="signin_domain_input"]', "hackclub");
