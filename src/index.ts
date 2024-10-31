@@ -114,6 +114,7 @@ await wait(4500);
 await page.goto("https://highseas.hackclub.com/api/battles/matchups")
 await wait(300);
 async function getMatchups() {
+await page.reload();
 const json:Matchup = await page.evaluate(() => JSON.parse(document.body.innerText))
 console.debug(json)
 let fp = 0
