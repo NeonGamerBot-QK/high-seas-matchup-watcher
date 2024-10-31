@@ -181,29 +181,29 @@ puppeteer
             {
               type: "section",
               text: {
-                "type": "mrkdwn",
-                text: `My Source is \`${project.project_source}\``,                
-              }
+                type: "mrkdwn",
+                text: `My Source is \`${project.project_source}\``,
+              },
             },
             {
               type: "section",
               text: {
-                "type": "mrkdwn",
+                type: "mrkdwn",
                 text: `Added by <@${project.entrant__slack_id.join(">, <@")}>`,
-              }
+              },
             },
             {
               type: "section",
               text: {
-                "type": "mrkdwn",
+                type: "mrkdwn",
                 text: `Created at *${new Date(project.created_time).toLocaleString()}* and shipped at *${new Date(project.ship_time).toLocaleString()}*`,
-              }
+              },
             },
             {
               type: "section",
               text: {
                 text: `This project took ${project.hours.toFixed(2)} and earned \`${project.doubloon_payout}\` dabloons`,
-                "type": "mrkdwn",
+                type: "mrkdwn",
               },
             },
             {
