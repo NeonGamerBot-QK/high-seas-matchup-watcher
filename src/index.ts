@@ -90,13 +90,19 @@ puppeteer
     await page.waitForNavigation();
 try {
     await page.evaluate(() => {
-      //@ts-ignore
+     try {
+
+     
       document
         .getElementsByClassName(
           "bg-white text-black p-2 px-3 sm:px-6 w-fit rounded-lg text-base linkPop",
         )[0]
-        .click();
-    });
+      //@ts-ignore
+        ?.click();
+      } catch (e) {
+
+      }
+      });
 } catch (e) {}
     await page.waitForNavigation();
     await wait(200);
