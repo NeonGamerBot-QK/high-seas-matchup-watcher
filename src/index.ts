@@ -179,60 +179,32 @@ puppeteer
               },
             },
             {
-              type: "rich_text",
-              elements: [
-                {
-                  type: "rich_text_section",
-                  elements: [
-                    {
-                      type: "text",
-                      text: `My Source is \`${project.project_source}\``,
-                    },
-                  ],
-                },
-              ],
+              type: "section",
+              text: {
+                "type": "mrkdwn",
+                text: `My Source is \`${project.project_source}\``,                
+              }
             },
             {
-              type: "rich_text",
-              elements: [
-                {
-                  type: "rich_text_section",
-                  elements: [
-                    {
-                      type: "text",
-                      text: `Added by <@${project.entrant__slack_id.join(">, <@")}>`,
-                    },
-                  ],
-                },
-              ],
+              type: "section",
+              text: {
+                "type": "mrkdwn",
+                text: `Added by <@${project.entrant__slack_id.join(">, <@")}>`,
+              }
             },
             {
-              type: "rich_text",
-              elements: [
-                {
-                  type: "rich_text_section",
-                  elements: [
-                    {
-                      type: "text",
-                      text: `Created at *${new Date(project.created_time).toLocaleString()}* and shipped at*${new Date(project.ship_time).toLocaleString()}*`,
-                    },
-                  ],
-                },
-              ],
+              type: "section",
+              text: {
+                "type": "mrkdwn",
+                text: `Created at *${new Date(project.created_time).toLocaleString()}* and shipped at *${new Date(project.ship_time).toLocaleString()}*`,
+              }
             },
             {
-              type: "rich_text",
-              elements: [
-                {
-                  type: "rich_text_section",
-                  elements: [
-                    {
-                      type: "text",
-                      text: `This project took ${project.hours.toFixed(2)} and earned \`${project.doubloon_payout}\` dabloons`,
-                    },
-                  ],
-                },
-              ],
+              type: "section",
+              text: {
+                text: `This project took ${project.hours.toFixed(2)} and earned \`${project.doubloon_payout}\` dabloons`,
+                "type": "mrkdwn",
+              },
             },
             {
               type: "actions",
