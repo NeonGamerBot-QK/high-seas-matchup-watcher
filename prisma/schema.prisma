@@ -9,27 +9,28 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
 model Project {
-  id        String   @id @default(uuid())
-  hs_id     String
-  identifie String
-  readme_url String
+  id                      String @id @default(uuid())
+  hs_id                   String
+  identifie               String
+  readme_url              String
   // entrant  String[]
-  repo_url String
-  rating Float
-  title String
-  deploy_url String
-  screenshot_url String
-  hours Float
+  repo_url                String
+  rating                  Float
+  title                   String
+  deploy_url              String
+  screenshot_url          String
+  hours                   Float
   // contest String[]
   // entrant__slack_id String[]
-  project_source String
-  ship_status String
-  ship_type String
-  created_time String
-  record_id String
-  ship_time String
-  total_hours Float
-  credited_hours Float
-  ship_status_modified_at String 
+  project_source          String
+  ship_status             String
+  ship_type               String
+  created_time            String
+  record_id               String
+  ship_time               String
+  total_hours             Float
+  credited_hours          Float
+  ship_status_modified_at String
 }
