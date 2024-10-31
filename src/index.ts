@@ -77,7 +77,10 @@ export interface Project2 {
 let cache: string[] = [];
 puppeteer.use(StealthPlugin());
 puppeteer
-  .launch({ headless: process.env.RUN_HEADLESS ? true : false, args: ["--no-sandbox"] })
+  .launch({
+    headless: process.env.RUN_HEADLESS ? true : false,
+    args: ["--no-sandbox"],
+  })
   .then(async (browser) => {
     const page = await browser.pages().then((p) => p[0]);
     page.goto("https://highseas.hackclub.com/");
