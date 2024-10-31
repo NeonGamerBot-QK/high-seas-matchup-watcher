@@ -1,0 +1,23 @@
+name: novncinstance
+services:
+    docker-desktop9:
+        restart: always
+        ports:
+            - 6909:6901
+            - 5909:5901
+          #  - 3079:3071
+        container_name: desktop9
+        volumes:
+            - $PWD:/home/dockeruser/code
+        image: piopirahl/docker-desktop:1.0.2
+# so it dosent eat my ram
+#        deploy:
+ #           resources:
+  #              limits:
+   #                 cpus: '0.1'
+    #                memory: 5000M
+     #           reservations:
+      #              cpus: '0.1'
+       #             memory: 2000M
+
+
