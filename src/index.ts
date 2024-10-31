@@ -78,7 +78,7 @@ let cache: string[] = [];
 puppeteer.use(StealthPlugin());
 puppeteer
   .launch({
-    headless:  false,
+    headless: false,
     args: ["--no-sandbox"],
   })
   .then(async (browser) => {
@@ -289,9 +289,9 @@ try {
     }
     getMatchups();
   });
-process.on('uncaughtException', function (err) {
+process.on("uncaughtException", function (err) {
   console.error(err);
   console.log("Node NOT Exiting...");
 });
 
-process.on('unhandledRejection', console.error)
+process.on("unhandledRejection", console.error);
