@@ -262,12 +262,12 @@ process.on("uncaughtException", function (err) {
   console.log("Node NOT Exiting...");
 });
 process.on("unhandledRejection", async (e: any) => {
-console.error(e)
-try {
-await web.chat.postMessage({
-  channel: process.env.SLACK_TOKEN!,
-//@ts-ignore
-  text: `\`\`\`${e.stack}\`\`\``
-})
-} catch (e) {}
+  console.error(e);
+  try {
+    await web.chat.postMessage({
+      channel: process.env.SLACK_TOKEN!,
+      //@ts-ignore
+      text: `\`\`\`${e.stack}\`\`\``,
+    });
+  } catch (e) {}
 });
