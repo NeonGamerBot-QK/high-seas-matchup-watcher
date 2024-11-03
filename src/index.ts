@@ -258,9 +258,9 @@ puppeteer
           channel: process.env.SLACK_CHANNEL!,
         });
       }
-      let timeout = 5 * 1000;
+      let timeout = 2.5 * 1000;
       if (fp == 1) timeout *= 2;
-      if (fp == 0) timeout *= 60;
+      if (fp == 0) timeout *= 30;
       console.log(`Waiting ${timeout / 1000} seconds for slack to post.`);
       await wait(timeout);
       getMatchups();
@@ -272,7 +272,7 @@ process.on("uncaughtException", async function (err) {
   console.log("Node NOT Exiting...");
   try {
     await web.chat.postMessage({
-      channel: process.env.SLACK_TOKEN!,
+      channel: process.env.SLACK_CHANNEL!,
       //@ts-ignore
       text: `\`\`\`${e.stack}\`\`\``,
     });
@@ -282,7 +282,7 @@ process.on("unhandledRejection", async (e: any) => {
   console.error(e);
   try {
     await web.chat.postMessage({
-      channel: process.env.SLACK_TOKEN!,
+      channel: process.env.SLACK_CHANNEL!,
       //@ts-ignore
       text: `\`\`\`${e.stack}\`\`\``,
     });
