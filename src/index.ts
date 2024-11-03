@@ -133,6 +133,9 @@ puppeteer
       );
       console.debug(json);
       let fp = 0;
+try {
+  
+
       for (const project of [json.project1, json.project2]) {
         // if(cache.includes(project.id)) continue;
         // cache.push(project.id)
@@ -258,6 +261,9 @@ puppeteer
           channel: process.env.SLACK_CHANNEL!,
         });
       }
+} catch (e) {
+  console.error(e)
+}
       let timeout = 2.5 * 1000;
       if (fp == 1) timeout *= 2;
       if (fp == 0) timeout *= 30;
@@ -266,7 +272,8 @@ puppeteer
       getMatchups();
     }
     getMatchups();
-  });
+
+
 process.on("uncaughtException", async function (err) {
   console.error(err);
   console.log("Node NOT Exiting...");
@@ -276,6 +283,7 @@ process.on("uncaughtException", async function (err) {
       //@ts-ignore
       text: `\`\`\`${e.stack}\`\`\``,
     });
+  getMatchups();
   } catch (e) {}
 });
 process.on("unhandledRejection", async (e: any) => {
@@ -286,5 +294,7 @@ process.on("unhandledRejection", async (e: any) => {
       //@ts-ignore
       text: `\`\`\`${e.stack}\`\`\``,
     });
+    getMatchups();
   } catch (e) {}
 });
+  });
