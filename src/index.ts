@@ -148,7 +148,8 @@ puppeteer
             rating: project.rating,
             title: project.title,
             deploy_url: project.deploy_url,
-            screenshot_url: project.screenshot_url || "https://noscreenshot.com",
+            screenshot_url:
+              project.screenshot_url || "https://noscreenshot.com",
             hours: project.hours,
             project_source: project.project_source,
             ship_status: project.ship_status,
@@ -165,18 +166,20 @@ puppeteer
           blocks: [
             //todo: https://app.slack.com/block-kit-builder/T053NBD7RDG#%7B%22blocks%22:%5B%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22This%20is%20a%20section%20block%20with%20an%20accessory%20image.%22%7D,%22accessory%22:%7B%22type%22:%22image%22,%22image_url%22:%22https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg%22,%22alt_text%22:%22cute%20cat%22%7D%7D%5D%7D
 
-            project.screenshot_url ? {
-              type: "image",
-              image_url: project.screenshot_url,
-              alt_text: project.title,
-            } : {
-              type: "header",
-text: {
-  "type": "plain_text",
-  text: "no img",
-  emoji:true 
-}
-            },
+            project.screenshot_url
+              ? {
+                  type: "image",
+                  image_url: project.screenshot_url,
+                  alt_text: project.title,
+                }
+              : {
+                  type: "header",
+                  text: {
+                    type: "plain_text",
+                    text: "no img",
+                    emoji: true,
+                  },
+                },
             {
               type: "header",
               text: {
