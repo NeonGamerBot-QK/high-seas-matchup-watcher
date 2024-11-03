@@ -133,137 +133,135 @@ puppeteer
       );
       console.debug(json);
       let fp = 0;
-try {
-  
+      try {
+        for (const project of [json.project1, json.project2]) {
+          // if(cache.includes(project.id)) continue;
+          // cache.push(project.id)
+          if (await db.project.findFirst({ where: { hs_id: project.id } }))
+            continue;
+          fp++;
+          await db.project.create({
+            data: {
+              hs_id: project.id,
+              identifie: project.identifier,
+              readme_url: project.readme_url,
+              repo_url: project.repo_url,
+              rating: project.rating,
+              title: project.title,
+              deploy_url: project.deploy_url,
+              screenshot_url:
+                project.screenshot_url || "https://noscreenshot.com",
+              hours: project.hours,
+              project_source: project.project_source,
+              ship_status: project.ship_status,
+              ship_type: project.ship_type,
+              created_time: project.created_time,
+              record_id: project.record_id,
+              ship_time: project.ship_time,
+              total_hours: project.total_hours,
+              credited_hours: project.credited_hours,
+              ship_status_modified_at: project.ship_status_modified_at,
+            },
+          });
+          await web.chat.postMessage({
+            blocks: [
+              //todo: https://app.slack.com/block-kit-builder/T053NBD7RDG#%7B%22blocks%22:%5B%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22This%20is%20a%20section%20block%20with%20an%20accessory%20image.%22%7D,%22accessory%22:%7B%22type%22:%22image%22,%22image_url%22:%22https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg%22,%22alt_text%22:%22cute%20cat%22%7D%7D%5D%7D
 
-      for (const project of [json.project1, json.project2]) {
-        // if(cache.includes(project.id)) continue;
-        // cache.push(project.id)
-        if (await db.project.findFirst({ where: { hs_id: project.id } }))
-          continue;
-        fp++;
-        await db.project.create({
-          data: {
-            hs_id: project.id,
-            identifie: project.identifier,
-            readme_url: project.readme_url,
-            repo_url: project.repo_url,
-            rating: project.rating,
-            title: project.title,
-            deploy_url: project.deploy_url,
-            screenshot_url:
-              project.screenshot_url || "https://noscreenshot.com",
-            hours: project.hours,
-            project_source: project.project_source,
-            ship_status: project.ship_status,
-            ship_type: project.ship_type,
-            created_time: project.created_time,
-            record_id: project.record_id,
-            ship_time: project.ship_time,
-            total_hours: project.total_hours,
-            credited_hours: project.credited_hours,
-            ship_status_modified_at: project.ship_status_modified_at,
-          },
-        });
-        await web.chat.postMessage({
-          blocks: [
-            //todo: https://app.slack.com/block-kit-builder/T053NBD7RDG#%7B%22blocks%22:%5B%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22This%20is%20a%20section%20block%20with%20an%20accessory%20image.%22%7D,%22accessory%22:%7B%22type%22:%22image%22,%22image_url%22:%22https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg%22,%22alt_text%22:%22cute%20cat%22%7D%7D%5D%7D
-
-            project.screenshot_url
-              ? {
-                  type: "image",
-                  image_url: project.screenshot_url,
-                  alt_text: project.title,
-                }
-              : {
-                  type: "header",
-                  text: {
-                    type: "plain_text",
-                    text: "no img",
-                    emoji: true,
+              project.screenshot_url
+                ? {
+                    type: "image",
+                    image_url: project.screenshot_url,
+                    alt_text: project.title,
+                  }
+                : {
+                    type: "header",
+                    text: {
+                      type: "plain_text",
+                      text: "no img",
+                      emoji: true,
+                    },
                   },
+              {
+                type: "header",
+                text: {
+                  type: "plain_text",
+                  text: project.title,
+                  emoji: true,
                 },
-            {
-              type: "header",
-              text: {
-                type: "plain_text",
-                text: project.title,
-                emoji: true,
               },
-            },
-            {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: `My Source is \`${project.project_source}\``,
+              {
+                type: "section",
+                text: {
+                  type: "mrkdwn",
+                  text: `My Source is \`${project.project_source}\``,
+                },
               },
-            },
-            {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: `Added by <@${project.entrant__slack_id.join(">, <@")}>`,
+              {
+                type: "section",
+                text: {
+                  type: "mrkdwn",
+                  text: `Added by <@${project.entrant__slack_id.join(">, <@")}>`,
+                },
               },
-            },
-            {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: `Created at *${new Date(project.created_time).toLocaleString()}* and shipped at *${new Date(project.ship_time).toLocaleString()}*`,
+              {
+                type: "section",
+                text: {
+                  type: "mrkdwn",
+                  text: `Created at *${new Date(project.created_time).toLocaleString()}* and shipped at *${new Date(project.ship_time).toLocaleString()}*`,
+                },
               },
-            },
-            {
-              type: "section",
-              text: {
-                text: `This project took ${project.hours.toFixed(2)} and earned \`${project.doubloon_payout}\` dabloons`,
-                type: "mrkdwn",
+              {
+                type: "section",
+                text: {
+                  text: `This project took ${project.hours.toFixed(2)} and earned \`${project.doubloon_payout}\` dabloons`,
+                  type: "mrkdwn",
+                },
               },
-            },
-            {
-              type: "actions",
-              elements: [
-                {
-                  type: "button",
-                  text: {
-                    type: "plain_text",
-                    text: "See README",
-                    emoji: true,
+              {
+                type: "actions",
+                elements: [
+                  {
+                    type: "button",
+                    text: {
+                      type: "plain_text",
+                      text: "See README",
+                      emoji: true,
+                    },
+                    value: "click_me_123",
+                    url: project.readme_url,
+                    action_id: "actionId-0",
                   },
-                  value: "click_me_123",
-                  url: project.readme_url,
-                  action_id: "actionId-0",
-                },
-                {
-                  type: "button",
-                  text: {
-                    type: "plain_text",
-                    text: "See Repo",
-                    emoji: true,
+                  {
+                    type: "button",
+                    text: {
+                      type: "plain_text",
+                      text: "See Repo",
+                      emoji: true,
+                    },
+                    value: "click_me_123",
+                    url: project.repo_url,
+                    action_id: "actionId-1",
                   },
-                  value: "click_me_123",
-                  url: project.repo_url,
-                  action_id: "actionId-1",
-                },
-                {
-                  type: "button",
-                  text: {
-                    type: "plain_text",
-                    text: "See Demo URL",
-                    emoji: true,
+                  {
+                    type: "button",
+                    text: {
+                      type: "plain_text",
+                      text: "See Demo URL",
+                      emoji: true,
+                    },
+                    value: "click_me_123",
+                    url: project.deploy_url,
+                    action_id: "actionId-2",
                   },
-                  value: "click_me_123",
-                  url: project.deploy_url,
-                  action_id: "actionId-2",
-                },
-              ],
-            },
-          ],
-          channel: process.env.SLACK_CHANNEL!,
-        });
+                ],
+              },
+            ],
+            channel: process.env.SLACK_CHANNEL!,
+          });
+        }
+      } catch (e) {
+        console.error(e);
       }
-} catch (e) {
-  console.error(e)
-}
       let timeout = 2.5 * 1000;
       if (fp == 1) timeout *= 2;
       if (fp == 0) timeout *= 30;
@@ -273,28 +271,27 @@ try {
     }
     getMatchups();
 
-
-process.on("uncaughtException", async function (err) {
-  console.error(err);
-  console.log("Node NOT Exiting...");
-  try {
-    await web.chat.postMessage({
-      channel: process.env.SLACK_CHANNEL!,
-      //@ts-ignore
-      text: `\`\`\`${e.stack}\`\`\``,
+    process.on("uncaughtException", async function (err) {
+      console.error(err);
+      console.log("Node NOT Exiting...");
+      try {
+        await web.chat.postMessage({
+          channel: process.env.SLACK_CHANNEL!,
+          //@ts-ignore
+          text: `\`\`\`${e.stack}\`\`\``,
+        });
+        getMatchups();
+      } catch (e) {}
     });
-  getMatchups();
-  } catch (e) {}
-});
-process.on("unhandledRejection", async (e: any) => {
-  console.error(e);
-  try {
-    await web.chat.postMessage({
-      channel: process.env.SLACK_CHANNEL!,
-      //@ts-ignore
-      text: `\`\`\`${e.stack}\`\`\``,
+    process.on("unhandledRejection", async (e: any) => {
+      console.error(e);
+      try {
+        await web.chat.postMessage({
+          channel: process.env.SLACK_CHANNEL!,
+          //@ts-ignore
+          text: `\`\`\`${e.stack}\`\`\``,
+        });
+        getMatchups();
+      } catch (e) {}
     });
-    getMatchups();
-  } catch (e) {}
-});
   });
